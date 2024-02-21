@@ -1,9 +1,22 @@
-class Automovil (marca: String, modelo: String, capacidadCombustible: Float, private var tipo: String, combustibleActual: Float, kilometrosActuales: Int
-): Vehiculo(marca, modelo, capacidadCombustible, combustibleActual, kilometrosActuales){
+class Automovil (
+                marca: String,
+                modelo: String,
+                capacidadCombustible: Float,
+                combustibleActual: Float,
+                kilometrosActuales: Float,
+                private var tipo: String,
+                esHibrido: Boolean,
+                condicionBritanica: Boolean)
 
-    override fun calcularAutonomia(): Int {
-        return super.calcularAutonomia() + 100
-    }
+                : Vehiculo(marca, modelo, capacidadCombustible, combustibleActual, kilometrosActuales){
 
-    override fun toString() = "${super.toString()}, tipo: $tipo} , autonomia: " + this.calcularAutonomia()
+init {
+
+}
+
+override fun calcularAutonomia(): Float {
+    return super.calcularAutonomia() + 100
+}
+
+override fun toString() = "${super.toString()}, tipo: $tipo} , autonomia: " + this.calcularAutonomia()
 }
