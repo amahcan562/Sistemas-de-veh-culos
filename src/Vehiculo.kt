@@ -1,4 +1,5 @@
 abstract class Vehiculo(
+                    val nombre: String,
                     private val marca: String,
                     private val modelo: String,
                     val capacidadCombustible: Float,
@@ -10,6 +11,7 @@ abstract class Vehiculo(
         requireAlgo(modelo)
         require(capacidadCombustible > .0f) { "La capacidad del tanque debe ser mayor a 0." }
         require(combustibleActual in .0f..capacidadCombustible) { "El combustible actual no puede ser mayor a la capacidad de combustible" }
+        require(esNombreUnico(nombre)) { "" }
     }
 
     fun requireAlgo(valor: String) {
@@ -18,7 +20,14 @@ abstract class Vehiculo(
 
 
     companion object {
-        const val KM_POR_LITRO = 10
+        const val KM_POR_LITRO_GAS = 10.0f
+
+        private val nombres : MutableSet<String> = mutableSetOf()
+
+        private fun esNombreUnico(nombre: String) : Boolean {
+            return nombres.add(nombre)
+        }
+
     }
 
     override fun toString(): String {
@@ -29,32 +38,50 @@ abstract class Vehiculo(
         return ("El vehículo puede recorrer ${calcularAutonomia()} km con $combustibleActual litros.")
     }
 
-    open fun calcularAutonomia(): Float {
-        return combustibleActual * KM_POR_LITRO
+    protected open fun calcularAutonomia(): Float {
+        return combustibleActual * KM_POR_LITRO_GAS
     }
 
     fun realizaViaje(distancia: Float): Float {
-        if (distancia < calcularAutonomia()) {
-            kilometrosActuales += distancia
-            combustibleActual -= (distancia / KM_POR_LITRO).redondear(2)
-            return .0f
-        } else {
-            val kilometros = calcularAutonomia()
-            kilometrosActuales += kilometros
-            combustibleActual = .0f
-            return distancia - kilometros
+        //val distanciaARecorrer = minOf(calcularAutonomia(), distancia)
+
+        val distanciaARecorrer: Float
+        val distanciaTotal = calcularAutonomia()
+
+        if (distancia < distanciaTotal) {
+            distanciaARecorrer = distancia
         }
+        else {
+            distanciaARecorrer = distanciaTotal
+        }
+
+        actualizarCombustible(distanciaARecorrer)
+        actualizarKilometros(distanciaARecorrer)
+
+        return distancia - distanciaARecorrer
+
     }
 
-    fun repostar(cantidad: Float): Float {
-        if (cantidad <= 0) {
+    private fun actualizarKilometros(distancia: Float) {
+        kilometrosActuales += distancia
+    }
+
+    protected open fun actualizarCombustible(distancia: Float) {
+        combustibleActual -= distancia / KM_POR_LITRO_GAS
+    }
+
+    fun repostar(cantidad: Float = 0f): Float {
+        val combustibleAntesRepostar = combustibleActual
+
+        if (cantidad <= 0 && cantidad + combustibleActual > capacidadCombustible) {
             println("Repostando al máximo...")
             combustibleActual = capacidadCombustible
-            return combustibleActual.redondear(2)
+
         } else {
             println("Repostando $cantidad litros...")
             combustibleActual += cantidad
-            return cantidad.redondear(2)
         }
+
+        return combustibleActual - combustibleAntesRepostar
     }
 }

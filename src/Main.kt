@@ -8,7 +8,11 @@ fun Float.redondear(posiciones: Int): Float{
 }
 
 fun main() {
-    val coche = Automovil("Volkswagen","Golf", 50, "SUV")
+    val coche = Automovil("c1", "Volkswagen","Golf", 50f, 40f, 0f, false)
+
+    Automovil.cambiarCondicionBritanica(true)
+
+    println(Automovil.condicionBritanica)
 
     val moto = Motocicleta("Kawasaki", "Ninja", 50, 300)
 
