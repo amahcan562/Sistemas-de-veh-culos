@@ -20,7 +20,7 @@ abstract class Vehiculo(
 
 
     companion object {
-        const val KM_POR_LITRO_GAS = 10.0f
+        const val KM_POR_LITRO_GAS = 10f
 
         private val nombres : MutableSet<String> = mutableSetOf()
 
@@ -31,7 +31,7 @@ abstract class Vehiculo(
     }
 
     override fun toString(): String {
-        return "Marca $marca, modelo $modelo, capacidad tanque $capacidadCombustible, combustible actual: $combustibleActual, kilometraje actual: $kilometrosActuales"
+        return "Nombre: $nombre, Marca $marca, modelo $modelo, capacidad tanque $capacidadCombustible, combustible actual: $combustibleActual, kilometraje actual: $kilometrosActuales"
     }
 
     fun obtenerInformacion(): String {

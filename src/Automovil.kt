@@ -1,5 +1,4 @@
-class Automovil (
-                nombre: String,
+class Automovil (nombre: String,
                 marca: String,
                 modelo: String,
                 capacidadCombustible: Float,
@@ -9,8 +8,7 @@ class Automovil (
 
                 : Vehiculo(nombre, marca, modelo, capacidadCombustible, combustibleActual, kilometrosActuales) {
 
-    companion object{
-        const val KM_POR_LITRO_HIBRIDO = 15.0f
+    companion object {
 
         const val KM_AHORRO_HIBRIDO = 5f
 
@@ -38,8 +36,12 @@ class Automovil (
 
     }
 
-    //TODO: CAMBIAR
     override fun toString() = "${super.toString()} , autonomia: " + this.calcularAutonomia()
+
+    fun realizarDerrape(): Float{
+        this.actualizarCombustible(if (esHibrido) 6.25f else 7.5f)
+        return combustibleActual
+    }
 
 }
 

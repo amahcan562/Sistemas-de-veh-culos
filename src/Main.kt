@@ -14,7 +14,7 @@ fun main() {
 
     println(Automovil.condicionBritanica)
 
-    val moto = Motocicleta("Kawasaki", "Ninja", 50, 300)
+    val moto = Motocicleta("MOTON", "Kawazaki", "Ninja", 10f, 9.5f, 0f, 1000)
 
     println(coche.toString())
     println(moto.toString())
