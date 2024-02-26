@@ -17,7 +17,7 @@ class Motocicleta(nombre: String,
     }
 
     override fun calcularAutonomia(): Float {
-        return combustibleActual * (KM_POR_LITRO_GAS - (1 - cilindrada/1000))
+        return combustibleActual * (KM_POR_LITRO_GAS - (1- cilindrada/1000))
     }
 
     override fun toString() = "${super.toString()}, cilindrada: $cilindrada, autonomia: " + this.calcularAutonomia() + "km."
